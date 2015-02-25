@@ -1,2 +1,0 @@
-# bmsd
-Multibody simulator
