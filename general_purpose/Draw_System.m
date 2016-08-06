@@ -21,7 +21,7 @@ function Draw_System(SP, SV, bN, bP, frame, draw_flag)
 % ------
 % SP          - structure containing system parameters (see struct_def.m)
 % SV          - structure containing system variables (see struct_def.m)
-% bN  [mx1]   - body numbers (on which are the end-effectors) 
+% bN  [mx1]   - body numbers (on which are the end-effectors)
 % bP  [3xm]   - bP(:,i) is the position of the i-th end-effector in the CF of body bN(i)
 % frame       - Displays the CF associated with the joints
 %               frame = [1 3 9 ] means that the CF of the 1 3 and 9th joints will be displayed.
@@ -85,17 +85,17 @@ pJ = fk_j(SP, SV, 1:SP.n );
 hold on
 
 for iJ = 1:SP.n % iterate over all joints
-  
+
   iL = iJ+1;         % joint iJ is the "input" joint for link iL
-  iS = SP.C(iL);     % link iS is the link that "supports" link iL    
-  
+  iS = SP.C(iL);     % link iS is the link that "supports" link iL
+
   % Plots the position of joint iJ
   if SP.J(iJ).type == 'R'
     J(iJ) = plot3(pJ(1,iJ),pJ(2,iJ),pJ(3,iJ),'ro','MarkerSize',10);
   else
     J(iJ) = plot3(pJ(1,iJ),pJ(2,iJ),pJ(3,iJ),'rd','MarkerSize',7.5);
   end
-  
+
   % Plots a vector from joint iJ to the CoM of link iL
   J2C(iJ) = plot3([pJ(1,iJ) SV.L(iL).p(1)], [pJ(2,iJ) SV.L(iL).p(2)], [pJ(3,iJ) SV.L(iL).p(3)],'b','LineWidth',line_w);
 
@@ -109,10 +109,10 @@ end
 
 try
   for iJ = 1:length(frame) % iterate over all frames to be plotted
-    
+
     Ri = SV.L(frame(iJ)+1).R;
     PlotFrames_my_in(pJ(:,frame(iJ)), Ri, fact);
-    
+
     % plot cylinders for the joints
     DrawCylinder(pJ(:,frame(iJ)), Ri(:,3), 0.01, 0.07, 'g')
   end
@@ -133,7 +133,7 @@ end
 % Plots the end-links
 cntr = 1;
 for iE = 1:length(bN)  % iterate over all end-effectors
-  
+
   pE = fk_e( SP, SV, bN(iE), bP(:,iE) );
   C2E(cntr) = plot3([SV.L(bN(iE)).p(1) pE(1)], [SV.L(bN(iE)).p(2) pE(2)], [SV.L(bN(iE)).p(3) pE(3)],'b','LineWidth',line_w);
   Tesaki(cntr) = plot3(pE(1), pE(2), pE(3),'r.','MarkerSize',EE_size);
